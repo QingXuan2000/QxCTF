@@ -1,7 +1,6 @@
 /**
  * 终端输入：鼠标 / 聚焦序列解析 + 增量解码器
  *
- * 移植自 sd-tui 的 src/ui/input.js 与 mouse.js（合并成一份，输入相关的都在这里）：
  * - 鼠标用 SGR(1006) 编码，避开 X10 协议的 223 列限制，兼容 Windows Terminal / iTerm2 / kitty
  * - readline 的 keypress 解码器会把鼠标上报拆成一串普通按键，导致点击终端时误触热键；
  *   这里先把鼠标 / 聚焦序列从原始输入里剥出来，剩下的文本再交给 readline

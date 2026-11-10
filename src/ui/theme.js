@@ -1,12 +1,12 @@
 /**
  * QxCTF 主题
  *
- * 配色取自 GitHub Primer。**整屏只有一个背景色**（`base`）：画布、顶栏、底栏、
- * 左栏、面板、选中行、弹层都用它，层次完全交给边框与前景色，不会出现深浅拼接的缝。
- *   深色 canvas.default `#0d1117`，浅色 `#ffffff`
+ * **整屏只有一个背景色**（`base`）：画布、顶栏、底栏、左栏、面板、选中行、弹层都用它，
+ * 层次完全交给边框与前景色，不会出现深浅拼接的缝。
+ *   深色底 `#0d1117`，浅色底 `#ffffff`
  */
 export const THEMES = {
-    // GitHub 深色（Primer dark）
+    // 深色
     dark: {
         base: '#0d1117',
         border: '#30363d',
@@ -22,7 +22,7 @@ export const THEMES = {
         warn: '#d29922',
         bad: '#f85149',
     },
-    // GitHub 浅色（Primer light）
+    // 浅色
     light: {
         base: '#ffffff',
         border: '#d0d7de',
