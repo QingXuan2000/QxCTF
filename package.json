@@ -1,0 +1,51 @@
+{
+  "name": "@qingxuan2000/qxctf",
+  "version": "3.0.0",
+  "description": "QxCTF 工具箱框架 —— 配置驱动的命令行工具启动器，零依赖 TUI（多级菜单、面包屑导航、多架构分发、工具包切换）。",
+  "keywords": [
+    "qxctf",
+    "tool-framework",
+    "tui",
+    "menu-system",
+    "tool-manager",
+    "javascript",
+    "cross-platform",
+    "launcher"
+  ],
+  "license": "MIT",
+  "author": "QingXuanJun",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QingXuan2000/qxctf.git"
+  },
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "qxctf": "src/cli.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "dev": "node --watch src/cli.js",
+    "test": "node --test --test-isolation=none tests/",
+    "test:isolated": "node --test tests/"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

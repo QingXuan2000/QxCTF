@@ -1,0 +1,13 @@
+# 依赖与构建产物
+node_modules/
+.npm-cache/
+.qxctf-home/
+.ctf-home/
+
+# 用户自己的工具包与配置不入库
+/tools
+/config
+
+# 但保留必须的文件
+!README.md
+!package.json
