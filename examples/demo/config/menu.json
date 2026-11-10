@@ -1,0 +1,79 @@
+{
+  "menu": {
+    "main": {
+      "title": "QxCTF 工具箱",
+      "items": [
+        {
+          "id": 1,
+          "name": "信息收集",
+          "submenu": "recon",
+          "desc": "本机信息示例",
+          "detail": [
+            "进入「信息收集」菜单",
+            "示例只读本机信息，不访问网络"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "环境自检",
+          "path": "node --version",
+          "desc": "确认 Node 可用",
+          "detail": [
+            "确认工具链可用：{command}",
+            "工作目录：{cwd}"
+          ]
+        },
+        {
+          "id": 3,
+          "name": "运行时信息（按架构分发）",
+          "path": {
+            "X86_64": "node -e \"console.log('x86_64', process.version)\"",
+            "X86": "node -e \"console.log('x86', process.version)\"",
+            "ARM64": "node -e \"console.log('arm64', process.version)\"",
+            "ARM32": "node -e \"console.log('arm32', process.version)\""
+          },
+          "desc": "演示 path 按架构分组",
+          "detail": [
+            "当前命中架构：{arch}",
+            "命令：{command}"
+          ]
+        },
+        {
+          "id": 4,
+          "name": "等待一会儿（演示中断）",
+          "path": "node -e \"setTimeout(()=>{}, 1500)\"",
+          "desc": "1.5 秒后返回",
+          "detail": [
+            "执行期间终端交给子进程",
+            "结束后按任意键回到界面"
+          ]
+        }
+      ]
+    },
+    "recon": {
+      "title": "信息收集",
+      "parent": "main",
+      "items": [
+        {
+          "id": 1,
+          "name": "示例：系统信息",
+          "path": "node -e \"console.log(process.platform, process.arch)\"",
+          "desc": "只读本地信息",
+          "detail": [
+            "命令：{command}",
+            "不访问网络"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "示例：本地时间",
+          "path": "node -e \"console.log(new Date().toISOString())\"",
+          "desc": "打印当前时间",
+          "detail": [
+            "命令：{command}"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "menu": {
+    "main": {
+      "title": "假工具集 / Fake Toolchain",
+      "items": [
+        {
+          "id": 1,
+          "name": "打招呼",
+          "type": "executable",
+          "path": "node tools/hello.js",
+          "args": ["--name", "测试 包"],
+          "desc": "验证 args 引用与 cwd",
+          "detail": "调用 {command}；这里用单行字符串写详情，换行用 \\n 也可以"
+        },
+        {
+          "id": 2,
+          "name": "按架构分发",
+          "type": "executable",
+          "path": {
+            "X86_64": "node tools/arch.js x86_64",
+            "X86": "node tools/arch.js x86",
+            "ARM64": "node tools/arch.js arm64",
+            "ARM32": "node tools/arch.js arm32"
+          },
+          "desc": "验证架构映射与选择器",
+          "detail": [
+            "按架构键挑命令，当前命中：{arch}",
+            "命令：{command}",
+            "用 a 键临时改架构"
+          ]
+        },
+        {
+          "id": 3,
+          "name": "相对 cwd",
+          "type": "executable",
+          "path": "node hello.js",
+          "cwd": "tools",
+          "desc": "cwd=tools 时用相对路径"
+        },
+        {
+          "id": 4,
+          "name": "失败退出",
+          "type": "executable",
+          "path": "node tools/fail.js 4",
+          "desc": "退出码 4，验证非零处理"
+        },
+        {
+          "id": 5,
+          "name": "慢工具",
+          "type": "executable",
+          "path": "node tools/slow.js 800",
+          "desc": "0.8 秒后返回"
+        },
+        {
+          "id": 6,
+          "name": "信息收集",
+          "type": "submenu",
+          "submenu": "recon",
+          "desc": "二级菜单"
+        },
+        {
+          "id": 7,
+          "name": "不存在的工具",
+          "type": "executable",
+          "path": "node tools/ghost.js",
+          "desc": "故意缺失，验证错误路径",
+          "detail": ["脚本 tools/ghost.js 故意不存在", "用来验证错误提示与 o 弹层"]
+        },
+        {
+          "id": 8,
+          "name": "Unicode 输出",
+          "type": "executable",
+          "path": "node tools/unicode.js",
+          "desc": "中文与框线字符"
+        },
+        {
+          "id": 10,
+          "name": "两位编号",
+          "type": "executable",
+          "path": "node tools/hello.js --name 第十项",
+          "desc": "验证两位编号对齐"
+        }
+      ]
+    },
+    "recon": {
+      "title": "信息收集",
+      "parent": "main",
+      "items": [
+        {
+          "id": 1,
+          "name": "深层菜单",
+          "type": "submenu",
+          "submenu": "recon-deep",
+          "desc": "三级菜单"
+        },
+        {
+          "id": 2,
+          "name": "环境变量摘要",
+          "type": "executable",
+          "path": "node tools/env.js",
+          "desc": "打印 QxCTF/Node 相关变量",
+          "detail": ["打印 cwd、execPath、PATH 项数与 QXCTF_HOME", "命令：{command}"]
+        }
+      ]
+    },
+    "recon-deep": {
+      "title": "第三层",
+      "parent": "recon",
+      "items": [
+        {
+          "id": 1,
+          "name": "回显 stdin",
+          "type": "executable",
+          "path": "node tools/stdin-echo.js",
+          "desc": "交互式：输入一行回一行"
+        }
+      ]
+    }
+  }
+}
