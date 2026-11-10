@@ -5,7 +5,7 @@
  * - 渲染时按行绝对定位输出，逐段合并相同样式，最后一次性写屏
  * - 记录鼠标命中区域（hitbox），供点击定位用
  *
- * 因为绘制结果是纯数据，测试可以直接读 `toLines()` 做断言，不需要真终端。
+ * 因为绘制结果是纯数据，`toLines()` 能直接取出不含 ANSI 的纯文本帧。
  */
 import { charWidth, clipText, strWidth } from './width.js';
 /** 各风格的四个角 */
@@ -329,7 +329,7 @@ export class Screen {
         out.push('\x1b[0m');
         return out.join('');
     }
-    /** 网格 -> 纯文本行（测试与快照用，不含 ANSI） */
+    /** 网格 -> 纯文本行（不含 ANSI） */
     toLines() {
         const lines = [];
         for (let y = 0; y < this.height; y += 1) {

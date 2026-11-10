@@ -37,9 +37,7 @@
   },
   "scripts": {
     "start": "node src/cli.js",
-    "dev": "node --watch src/cli.js",
-    "test": "node --test --test-isolation=none tests/",
-    "test:isolated": "node --test tests/"
+    "dev": "node --watch src/cli.js"
   },
   "dependencies": {
     "zod": "^4.6.7"

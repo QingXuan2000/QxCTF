@@ -7,7 +7,7 @@
 import { FAVORITES_VIEW, RECENT_VIEW, SETTINGS_TOTAL, SETTINGS_VIEW, badgeOf, clamp, crumbSegments } from './model.js';
 import { drawModalFrame, formatAgo, modalHints, shortPath } from './chrome.js';
 import { Screen } from '../ui/screen.js';
-import { clipText, strWidth, wrapText } from '../ui/width.js';
+import { clipText, strWidth } from '../ui/width.js';
 /** 底部固定占位：分隔线 1 + 命令条 1 + 详情区（行数随手高度伸缩） */
 /** 详情区行数：随内容区高度伸缩（参数是内容区高度） */
 function detailRowCount(height) {
@@ -566,5 +566,3 @@ export function outputLines(run) {
         ...run.tail.map((line) => `|${line}`),
     ];
 }
-/** 菜单行 -> 文本（测试与快照辅助） */
-export { wrapText };

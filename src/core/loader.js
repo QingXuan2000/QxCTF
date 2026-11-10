@@ -2,7 +2,7 @@
  * TUI 与核心层之间的桥
  *
  * App 只依赖这个接口：加载上下文、切换工具包、维护注册表。
- * 测试可以传入自己的实现，把文件系统整段替换掉。
+ * 需要替换文件系统时，可以传入自己的实现。
  */
 import { loadBootstrap } from './bootstrap.js';
 import { addPackage, listPackages, removePackage } from './packages.js';

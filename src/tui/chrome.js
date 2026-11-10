@@ -8,7 +8,7 @@ import path from 'node:path';
 import { FAVORITES_VIEW, RECENT_VIEW, SIDEBAR_ENTRIES } from './model.js';
 import { isListableItem } from '../core/menu.js';
 import { Screen } from '../ui/screen.js';
-import { padEndWidth, strWidth, truncateMiddle, wrapText } from '../ui/width.js';
+import { padEndWidth, strWidth, truncateMiddle } from '../ui/width.js';
 import { PRODUCT } from '../version.js';
 /** 缩短 home 前缀 */
 function shortenHome(value) {
@@ -280,6 +280,3 @@ export function modalHints(modal) {
             return [['Enter', '载入'], ['Esc', '取消']];
     }
 }
-/** 两个虚拟视图的说明文字 */
-/** 侧栏标签（虚拟视图用中文名） */
-/** 兼容：包一层 wrapText 给帮助文本用 */

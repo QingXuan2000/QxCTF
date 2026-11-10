@@ -50,9 +50,9 @@
   - [自定义配色](#自定义配色)
   - [架构分发](#架构分发)
 - [数据目录](#数据目录)
-- [示例与夹具](#示例与夹具)
+- [示例工具包](#示例工具包)
 - [项目结构](#项目结构)
-- [开发与测试](#开发与测试)
+- [开发](#开发)
 - [程序化使用](#程序化使用)
 - [许可证](#许可证)
 
@@ -384,16 +384,16 @@ qxctf run main:3 --dry-run --arch ARM64
 | 收藏 | `~/.qxctf/favorites.json`（`工具包根::菜单::编号` 列表） |
 | 执行历史 | `~/.qxctf/history.json`（最近 60 条，含退出码、耗时、输出尾部） |
 
-`QXCTF_HOME` 可覆盖数据目录（测试与多环境切换都用它）。收藏与历史的键都带工具包根，切换工具包不会串；文件损坏时按空处理，不影响启动。
+`QXCTF_HOME` 可覆盖数据目录（多环境切换时用它）。收藏与历史的键都带工具包根，切换工具包不会串；文件损坏时按空处理，不影响启动。
 
 ---
 
-## 示例与夹具
+## 示例工具包
 
 | 目录 | 用途 |
 | --- | --- |
 | `examples/demo/` | `qxctf init examples/demo` 生成的示例包：2 个菜单 / 6 个菜单项（平铺），命令只依赖本机 `node`，示例只读本地信息、不访问网络 |
-| `examples/fake-tools/` | 假工具集：10 个 `node` 脚本，覆盖 args 引用、架构映射、cwd、退出码、三级菜单、故意缺失的脚本、Unicode 输出、慢工具、交互式 stdin |
+| `examples/fake-tools/` | 演示用工具集：10 个 `node` 脚本，覆盖 args 引用、架构映射、cwd、退出码、三级菜单、故意缺失的脚本、Unicode 输出、慢工具、交互式 stdin |
 
 ```bash
 qxctf config examples/fake-tools
@@ -405,7 +405,6 @@ qxctf run main:2 --arch ARM64 --dry-run
 ```
 
 假工具集全部无副作用（只打印信息），可直接在 TUI 里随便点。
-
 ---
 
 ## 项目结构
@@ -414,7 +413,7 @@ qxctf run main:2 --arch ARM64 --dry-run
 src/
 ├── cli.js                  # 入口：参数解析、子命令分发、TUI 启动
 ├── index.js                # 程序化 API 导出
-├── version.js              # 版本常量（与 package.json 由测试对齐）
+├── version.js              # 版本常量（与 package.json 保持一致）
 ├── core/                   # 零 UI 依赖的核心层
 │   ├── arch.js             # 架构/平台识别、候选顺序
 │   ├── bootstrap.js        # 启动上下文装配
@@ -438,38 +437,25 @@ src/
     ├── model.js            # 视图模型、几何计算、设置页分区
     ├── chrome.js           # 顶栏 / 左侧两面板 / 底栏 / 弹层外框
     └── views.js            # 工具列表视图 / 设置页 / 弹层
-tests/                      # node:test 用例（按模块分文件）+ helpers/ 夹具
 examples/demo/              # 可运行的示例工具包
-examples/fake-tools/        # 假工具集：覆盖各条执行链路
+examples/fake-tools/        # 演示用工具集：覆盖各条执行链路
 ```
 
-仓库根只留 `package.json` / `package-lock.json` / `README.md` / `LICENSE` / `.gitignore` / `src` / `tests` / `examples`；没有构建脚本、没有产物目录、没有打包缓存。
+仓库根只留 `package.json` / `package-lock.json` / `README.md` / `LICENSE` / `.gitignore` / `src` / `examples`；没有构建脚本、没有产物目录、没有打包缓存。
 
-三层之间没有循环依赖：`core/` 只依赖 `fs` / `child_process`，`ui/` 是纯渲染、不认业务，`tui/app.js` 只管「状态 + 输入 → 一帧」。TUI 渲染是纯函数式的，所以导航、渲染、配置校验都能脱离终端单测。
+三层之间没有循环依赖：`core/` 只依赖 `fs` / `child_process`，`ui/` 是纯渲染、不认业务，`tui/app.js` 只管「状态 + 输入 → 一帧」。TUI 渲染是纯函数式的，导航、渲染、配置校验都能脱离真实终端跑。
 
 ---
 
-## 开发与测试
+## 开发
 
 ```bash
+npm install
 npm start            # node src/cli.js
 npm run dev          # node --watch src/cli.js
-npm test             # node --test --test-isolation=none tests/
-npm run test:isolated # 每个测试文件独立进程
 ```
 
-`npm test` 直接跑 `node --test`，源码就是 JS，没有编译步骤，也不依赖 tsx/esbuild 常驻进程，在受限环境（沙箱、CI 容器）里也能跑。覆盖范围：
-
-- 菜单栈进出、面包屑、菜单项动作映射、目标表达式解析
-- `menu.json` 的结构与语义校验（BOM、非法 JSON、重复 id、悬空 submenu、分区展开）
-- `settings.json` 扁平写法与旧嵌套兼容、已删字段被忽略、架构选项汇总顺序
-- 执行计划的架构优先级、参数引用、cwd 解析、真实子进程退出码
-- 工具包注册表去重 / 增删 / 损坏文件降级、配置目录持久化
-- 收藏与历史：切换 / 去重 / 按工具包隔离 / 时间排序 / 损坏文件降级
-- `qxctf init` 生成物可加载、重复执行不覆盖、`--force` 覆盖
-- TUI：直接构造 `QxCtfTui`，用 `snapshot()` 取纯文本帧断言界面，用 `handleKeypress` / `handleMouse` 驱动交互 —— 覆盖渲染、数字选号、子菜单进出、视图切换、即时过滤、收藏与收藏视图、最近使用视图、执行结果（toast + `o` 弹层，且首页不残留上次结果）、各类弹层、主题切换、鼠标（侧栏/行/★/底栏/滚轮）、窄终端与首次运行
-
-键盘与鼠标都走真实事件路径（`handleKeypress('\r', {name:'return'})`、1-based 鼠标坐标），不需要 pty。
+源码就是运行产物：没有编译步骤，没有 `dist/`，没有类型生成，改完直接刷新终端即可。`src/` 分三层，`core/` 与 `ui/` 之间互不依赖，`tui/` 只做编排。
 
 ---
 
