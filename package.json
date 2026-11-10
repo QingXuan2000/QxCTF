@@ -16,7 +16,7 @@
   "author": "QingXuanJun",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/QingXuan2000/qxctf.git"
+    "url": "git+https://github.com/QingXuan2000/QxCTF.git"
   },
   "type": "module",
   "main": "./src/index.js",
