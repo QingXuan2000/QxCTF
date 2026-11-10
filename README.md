@@ -486,4 +486,6 @@ console.log(tui.snapshot(110, 30).join('\n')); // 纯文本一帧
 
 ## 许可证
 
-MIT License · Copyright (c) 2025 QingXuanJun
+GNU General Public License v3.0 · Copyright (c) 2025 QingXuanJun
+
+完整条款见 [LICENSE](LICENSE)。
